@@ -1,0 +1,59 @@
+USE StillWatersDB;
+SHOW TABLES;
+CREATE TABLE sweaters 
+(
+ProductID INT unsigned NOT NULL, 
+Size VARCHAR(20) NOT NULL, 
+Material VARCHAR(100) NOT NULL,
+Brand VARCHAR(50) NOT NULL,
+Colour VARCHAR(50) NOT NULL,
+PRIMARY KEY (ProductID)
+);
+SHOW TABLES;
+CREATE TABLE pants
+(
+ProductID INT unsigned NOT NULL,
+Size VARCHAR(20) NOT NULL,
+Material VARCHAR(100) NOT NULL,
+Brand VARCHAR(50) NOT NULL,
+Colour VARCHAR(50) NOT NULL,
+PRIMARY KEY (ProductID)
+);
+CREATE TABLE masks
+(
+ProductID INT unsigned NOT NULL, 
+Size VARCHAR(20) NOT NULL, 
+Brand VARCHAR(100) NOT NULL, 
+Colour VARCHAR(50) NOT NULL,
+PRIMARY KEY (ProductID)
+);
+CREATE TABLE shorts
+(
+ProductID INT unsigned NOT NULL,
+Size VARCHAR(20) NOT NULL, 
+Material VARCHAR(100) NOT NULL, 
+Brand VARCHAR(50) NOT NULL, 
+Colour VARCHAR(50) NOT NULL,
+PRIMARY KEY (ProductID) 
+);
+CREATE TABLE vinyl
+(
+ToolID INT unsigned NOT NULL,
+vinylType VARCHAR(100) NOT NULL, 
+colour VARCHAR(100) NOT NULL,
+PRIMARY KEY (ToolID)
+);
+CREATE TABLE inventory
+(
+Product INT unsigned NOT NULL,
+Quantity INT unsigned NOT NULL,
+LeadTime INT unsigned NOT NULL,
+CONSTRAINT fk_1 FOREIGN KEY (Product) REFERENCES shirts(ProductID),
+CONSTRAINT fk_2 FOREIGN KEY (Product) REFERENCES sweaters(ProductID), 
+CONSTRAINT fk_3 FOREIGN KEY (Product) REFERENCES pants(ProductID),
+CONSTRAINT fk_4 FOREIGN KEY (Product) REFERENCES masks(ProductID),
+CONSTRAINT fk_5 FOREIGN KEY (Product) REFERENCES shorts(ProductID),
+CONSTRAINT fk_6 FOREIGN KEY (Product) REFERENCES Vinyl(ToolID)
+); 
+USE StillWatersDB;
+ALTER TABLE shirts ADD sleeves VARCHAR(10) NOT NULL;
