@@ -10,7 +10,7 @@ public class Shirts {
     private String sleaves;
     private int leadTime;
     private int num;
-    private SQLConnection db = new SQLConnection();
+    private SQLConnection db;
 
     // Constructions 
     public Shirts(String size, String colour, String material, String brand, String sleaves, int num) {
@@ -20,6 +20,10 @@ public class Shirts {
         this.brand = brand;
         this.sleaves = sleaves;
         this.num = num;
+        db = new SQLConnection();
+    }
+    public Shirts() {
+        db = new SQLConnection();
     }
 
     // Getters and Setters
@@ -82,6 +86,24 @@ public class Shirts {
         return lt;
     }
 
+    /**
+     * Analyzes the placed order and accordingly removes and updates the shirt for the shirts database and inventory.
+     * If the shirt is not found in the inventory, notify client and business with need for shirt and state calculated lead time.
+     * If shirt exists, return the complete order status as a string to write to the order receipt.
+     */
+    public String placedOrder() {
+        return "The order results/details";
+    }
+    /**
+     * Updates and adds a new shirt to the stock and inventory related to the shirts database.
+     * @param addSize   Size of the shirt to add to the database.
+     * @param addColour Colour of the shirt to add to the database.
+     * @param addMaterial   Material of the shirt to add to the database.
+     * @param addBrand  Brand of the shirt to add to the database.
+     * @param addSleaves    Length of sleeves of the shirt to add to the database.
+     * @param quantity  Ammount of shirts that are to be added into the inventory. 
+     * @throws SQLException
+     */
     public void addStockShirts (String addSize, String addColour, String addMaterial, String addBrand, String addSleaves, int quantity) throws SQLException {
         db.initializeConnection();
         int Pid = 0;
@@ -97,6 +119,8 @@ public class Shirts {
             try (Statement stmt = db.getConnection().createStatement();) {
                 String stockUpdate = "UPDATE inventory SET Quantity = Quantity + " + quantity + " WHERE ProductId = " + Pid + ";";
                 stmt.executeUpdate(stockUpdate);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
         else {
