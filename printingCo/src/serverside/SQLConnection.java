@@ -42,4 +42,11 @@ public class SQLConnection {
             e.printStackTrace();
         }
     }
+    public void closeConn() {
+        try {
+            dbConnect.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -4,20 +4,20 @@ import java.sql.*;
 
 public class Shirts {
     private String size;
-    private String colour;
     private String material; 
     private String brand;
+    private String colour;
     private String sleaves;
     private int leadTime;
     private int num;
     private SQLConnection db;
 
     // Constructions 
-    public Shirts(String size, String colour, String material, String brand, String sleaves, int num) {
+    public Shirts(String size, String material, String brand, String colour, String sleaves, int num) {
         this.size = size;
-        this.colour = colour;
         this.material = material;
         this.brand = brand;
+        this.colour = colour;
         this.sleaves = sleaves;
         this.num = num;
         db = new SQLConnection();
@@ -30,14 +30,14 @@ public class Shirts {
     public String getSize() {
         return size;
     }
-    public String getColour() {
-        return colour;
-    }
     public String getMaterial() {
         return material;
     }
     public String getBrand() {
         return brand;
+    }
+    public String getColour() {
+        return colour;
     }
     public String getSleaves() {
         return sleaves;
@@ -52,14 +52,14 @@ public class Shirts {
     public void setSize(String size) {
         this.size = size;
     }
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
     public void setMaterial(String material) {
         this.material = material;
     } 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+    public void setColour(String colour) {
+        this.colour = colour;
     }
     public void setSleaves(String sleaves) {
         this.sleaves = sleaves;
@@ -72,6 +72,14 @@ public class Shirts {
     }
 
     // Methods
+    /**
+     * Calculate the estimated lead time of the specific shirt.
+     * Which depends only on the certain variables.
+     * @param sz    Size of the shirt.
+     * @param mtrl  Material of the shirt.
+     * @param brnd  Brand of the shirt.
+     * @return      Returns the number of hours for estimated lead time, as an integer.
+     */
     public int findLeadTime(String sz, String mtrl, String brnd) {
         int lt = 24;
         if (!brnd.equals("BellaCanvas")) {
@@ -85,29 +93,98 @@ public class Shirts {
         }
         return lt;
     }
+    /**
+     * Check database and inventory to see if shirt exists.
+     * @param sz    Size of the shirt to be checked.
+     * @param mtrl  Material of the shirt to be checked.
+     * @param brnd  Brand of the shirt to be checked.
+     * @param clr   Colour of the shirt to be checked.
+     * @param slvs  Length of sleaves of the shirt to be checked.
+     * @return      Returns the boolean value of wether the shirt exists(True) or not(False) in the database/inventory.
+     * @throws SQLException
+     */
+    public boolean shirtExists(String sz, String mtrl, String brnd, String clr, String slvs) throws SQLException {
+        boolean exists = true;
+        db.initializeConnection();
+        Statement myStmt = db.getConnection().createStatement();
+        ResultSet results = myStmt.executeQuery("SELECT * FROM shirts WHERE Size ='" 
+            + sz + "' AND Material ='" + mtrl + "' AND Brand ='" + brnd + "' AND Colour ='" + clr + "' AND Sleaves ='" + slvs + "'" + ";");
+        db.closeConn();
+        if (results == null) {
+            exists = false;
+        }
+        return exists;
+    }
 
     /**
      * Analyzes the placed order and accordingly removes and updates the shirt for the shirts database and inventory.
      * If the shirt is not found in the inventory, notify client and business with need for shirt and state calculated lead time.
      * If shirt exists, return the complete order status as a string to write to the order receipt.
+     * @return      Returns the details of the shirt which was requested, as a String.
+     * @throws SQLException
      */
-    public String placedOrder() {
-        return "The order results/details";
+    public String placedOrder() throws SQLException {
+        String details = ""; 
+
+        db.initializeConnection();
+        Statement myStmt = db.getConnection().createStatement();
+        ResultSet results = myStmt.executeQuery("SELECT * FROM shirts WHERE Size ='" 
+            + size + "' AND Material ='" + material + "' AND Brand ='" + brand + "' AND Colour ='" + colour + "' AND Sleaves ='" + sleaves + "'" + ";");
+        if (results != null) {
+            int Pid = results.getInt("ProductID");
+            results = myStmt.executeQuery("SELECT Quantity FROM inventory WHERE ProductID = " + Pid + ";");
+            if (num < results.getInt("Quantity")) {
+                try (Statement stmt = db.getConnection().createStatement();) {
+                    String stockUpdate = "UPDATE inventory SET Quantity = Quantity - " + num + " WHERE ProductId = " + Pid + ";";
+                    stmt.executeUpdate(stockUpdate);
+                    db.closeConn();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                details = "";
+            } 
+            else if (num == results.getInt("Quantity")) {
+                try (Statement stmt = db.getConnection().createStatement();) {
+                    String stockDelete = "DELETE FROM inventory WHERE ProductID = " + Pid + ";";
+                    stmt.executeUpdate(stockDelete);
+                    stockDelete = "DELETE FROM shirts WHERE ProductID = " + Pid + ";";
+                    db.closeConn();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                details = "";
+            } 
+            else if (num > results.getInt("Quantity")) {
+                try (Statement stmt = db.getConnection().createStatement();) {
+                    String stockDelete = "DELETE FROM inventory WHERE ProductID = " + Pid + ";";
+                    stmt.executeUpdate(stockDelete);
+                    stockDelete = "DELETE FROM shirts WHERE ProductID = " + Pid + ";";
+                    db.closeConn();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                int est = findLeadTime(this.size, this.material, this.brand);
+                details = "";
+            }
+        } else {
+            int est = findLeadTime(this.size, this.material, this.brand);
+            details = "";
+        }
+        return details;
     }
     /**
      * Updates and adds a new shirt to the stock and inventory related to the shirts database.
      * @param addSize   Size of the shirt to add to the database.
-     * @param addColour Colour of the shirt to add to the database.
      * @param addMaterial   Material of the shirt to add to the database.
      * @param addBrand  Brand of the shirt to add to the database.
+     * @param addColour Colour of the shirt to add to the database.
      * @param addSleaves    Length of sleeves of the shirt to add to the database.
      * @param quantity  Ammount of shirts that are to be added into the inventory. 
      * @throws SQLException
      */
-    public void addStockShirts (String addSize, String addColour, String addMaterial, String addBrand, String addSleaves, int quantity) throws SQLException {
+    public void stockAddShirt (String addSize, String addMaterial, String addBrand, String addColour, String addSleaves, int quantity) throws SQLException {
         db.initializeConnection();
         int Pid = 0;
-
         Statement myStmt = db.getConnection().createStatement();
         ResultSet results = myStmt.executeQuery("SELECT * FROM shirts WHERE Size ='" 
             + addSize + "' AND Material ='" + addMaterial + "' AND Brand ='" + addBrand + "' AND Colour ='" + addColour + "' AND Sleaves ='" + addSleaves + "'" + ";");
@@ -119,6 +196,7 @@ public class Shirts {
             try (Statement stmt = db.getConnection().createStatement();) {
                 String stockUpdate = "UPDATE inventory SET Quantity = Quantity + " + quantity + " WHERE ProductId = " + Pid + ";";
                 stmt.executeUpdate(stockUpdate);
+                db.closeConn();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -140,6 +218,7 @@ public class Shirts {
 
                 stmt.executeUpdate(insertSql);
                 stmt.executeUpdate(stockSql);
+                db.closeConn();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
