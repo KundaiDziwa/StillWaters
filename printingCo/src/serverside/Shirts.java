@@ -3,6 +3,7 @@ package printingCo.src.serverside;
 import java.sql.*;
 
 public class Shirts {
+    private String receipt = "No Order was Processed.";
     private String size;
     private String material; 
     private String brand;
@@ -21,12 +22,20 @@ public class Shirts {
         this.sleaves = sleaves;
         this.num = num;
         db = new SQLConnection();
+        try {
+            placedOrder();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     public Shirts() {
         db = new SQLConnection();
     }
 
     // Getters and Setters
+    public String getReceipt() {
+        return receipt;
+    }
     public String getSize() {
         return size;
     }
@@ -49,6 +58,9 @@ public class Shirts {
         return num;
     }
 
+    public void getReceipt(String receipt) {
+        this.receipt = receipt;
+    }
     public void setSize(String size) {
         this.size = size;
     }
@@ -123,9 +135,7 @@ public class Shirts {
      * @return      Returns the details of the shirt which was requested, as a String.
      * @throws SQLException
      */
-    public String placedOrder() throws SQLException {
-        String details = ""; 
-
+    public void placedOrder() throws SQLException {
         db.initializeConnection();
         Statement myStmt = db.getConnection().createStatement();
         ResultSet results = myStmt.executeQuery("SELECT * FROM shirts WHERE Size ='" 
@@ -141,7 +151,7 @@ public class Shirts {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                details = "";
+                receipt = "";
             } 
             else if (num == results.getInt("Quantity")) {
                 try (Statement stmt = db.getConnection().createStatement();) {
@@ -152,7 +162,7 @@ public class Shirts {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                details = "";
+                receipt = "";
             } 
             else if (num > results.getInt("Quantity")) {
                 try (Statement stmt = db.getConnection().createStatement();) {
@@ -164,13 +174,12 @@ public class Shirts {
                     e.printStackTrace();
                 }
                 int est = findLeadTime(this.size, this.material, this.brand);
-                details = "";
+                receipt = "";
             }
         } else {
             int est = findLeadTime(this.size, this.material, this.brand);
-            details = "";
+            receipt = "";
         }
-        return details;
     }
     /**
      * Updates and adds a new shirt to the stock and inventory related to the shirts database.
