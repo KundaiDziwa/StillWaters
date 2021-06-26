@@ -13,7 +13,7 @@ public class Shirts {
     private int num;
     private SQLConnection db;
 
-    // Constructions 
+    // Constructors 
     public Shirts(String size, String material, String brand, String colour, String sleaves, int num) {
         this.size = size;
         this.material = material;
@@ -93,16 +93,7 @@ public class Shirts {
      * @return      Returns the number of hours for estimated lead time, as an integer.
      */
     public int findLeadTime(String sz, String mtrl, String brnd) {
-        int lt = 24;
-        if (!brnd.equals("BellaCanvas")) {
-            lt = 48;
-        } 
-        if (!mtrl.contains("cotton") || !mtrl.contains("polyester")) {
-            lt = 72;
-        }
-        if (!sz.equals("m.S") || !sz.equals("w.S") || !sz.equals("m.M") || !sz.equals("w.M") || !sz.equals("m.L") || !sz.equals("w.L")) {
-            lt = 96;
-        }
+        int lt = 48;
         return lt;
     }
     /**
@@ -151,7 +142,7 @@ public class Shirts {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                receipt = "";
+                receipt = "Clothing Tyoe: Shirt\nType: " + sleaves + "\nSize: " + size + "\nMaterial: " + material + "\nBrand: " + brand + "\n\nQuantity: " + Integer.toString(num);
             } 
             else if (num == results.getInt("Quantity")) {
                 try (Statement stmt = db.getConnection().createStatement();) {
@@ -162,7 +153,7 @@ public class Shirts {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                receipt = "";
+                receipt = "Clothing Type: Shirt\nType: " + sleaves + "\nSize: " + size + "\nMaterial: " + material + "\nBrand: " + brand + "\n\nQuantity: " + Integer.toString(num);
             } 
             else if (num > results.getInt("Quantity")) {
                 try (Statement stmt = db.getConnection().createStatement();) {
@@ -173,12 +164,13 @@ public class Shirts {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                int est = findLeadTime(this.size, this.material, this.brand);
-                receipt = "";
+                receipt = "Clothing Tyoe: Shirt\nType: " + sleaves + "\nSize: " + size + "\nMaterial: " + material + "\nBrand: " + brand + "\n\nQuantity: " + Integer.toString(num);
             }
+            int est = findLeadTime(this.size, this.material, this.brand);
+            receipt += "\n\nEstimated Shipping time is " + Integer.toString(est) + "hrs.\n\n";
         } else {
             int est = findLeadTime(this.size, this.material, this.brand);
-            receipt = "";
+            receipt = "No Inventory.\nEstimated Shipping time is " + Integer.toString(est) + "hrs.\n\nThank you for your patience.";
         }
     }
     /**
