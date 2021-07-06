@@ -1,6 +1,8 @@
 package printingCo.src.serverside;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Shirts {
     private String receipt = "No Order was Processed.";
@@ -8,18 +10,18 @@ public class Shirts {
     private String material; 
     private String brand;
     private String colour;
-    private String sleaves;
+    private String sleeves;
     private int leadTime;
     private int num;
     private SQLConnection db;
 
     // Constructors 
-    public Shirts(String size, String material, String brand, String colour, String sleaves, int num) {
+    public Shirts(String size, String material, String brand, String colour, String sleeves, int num) {
         this.size = size;
         this.material = material;
         this.brand = brand;
         this.colour = colour;
-        this.sleaves = sleaves;
+        this.sleeves = sleeves;
         this.num = num;
         db = new SQLConnection();
         try {
@@ -48,8 +50,8 @@ public class Shirts {
     public String getColour() {
         return colour;
     }
-    public String getSleaves() {
-        return sleaves;
+    public String getSleeves() {
+        return sleeves;
     }
     public int getLeadTime() {
         return leadTime;
@@ -73,8 +75,8 @@ public class Shirts {
     public void setColour(String colour) {
         this.colour = colour;
     }
-    public void setSleaves(String sleaves) {
-        this.sleaves = sleaves;
+    public void setSleeves(String sleeves) {
+        this.sleeves = sleeves;
     }
     public void setLeadTime(int leadTime) {
         this.leadTime = leadTime;
@@ -110,10 +112,10 @@ public class Shirts {
         boolean exists = true;
         db.initializeConnection();
         Statement myStmt = db.getConnection().createStatement();
-        ResultSet results = myStmt.executeQuery("SELECT * FROM shirts WHERE Size ='" 
-            + sz + "' AND Material ='" + mtrl + "' AND Brand ='" + brnd + "' AND Colour ='" + clr + "' AND Sleaves ='" + slvs + "'" + ";");
+        ResultSet results = myStmt.executeQuery("SELECT * FROM shirts WHERE Size = '" 
+            + sz + "' AND Material = '" + mtrl + "' AND Brand = '" + brnd + "' AND Colour = '" + clr + "' AND Sleaves = '" + slvs + "';");
         db.closeConn();
-        if (results == null) {
+        if (results.next()) {
             exists = false;
         }
         return exists;
@@ -129,49 +131,51 @@ public class Shirts {
     public void placedOrder() throws SQLException {
         db.initializeConnection();
         Statement myStmt = db.getConnection().createStatement();
-        ResultSet results = myStmt.executeQuery("SELECT * FROM shirts WHERE Size ='" 
-            + size + "' AND Material ='" + material + "' AND Brand ='" + brand + "' AND Colour ='" + colour + "' AND Sleaves ='" + sleaves + "'" + ";");
-        if (results != null) {
-            int Pid = results.getInt("ProductID");
-            results = myStmt.executeQuery("SELECT Quantity FROM inventory WHERE ProductID = " + Pid + ";");
-            if (num < results.getInt("Quantity")) {
+        ResultSet results = myStmt.executeQuery("SELECT ProductID FROM shirts WHERE Size = '" + size + "' AND Material = '" + material + "' AND Brand = '" + brand + "' AND Colour = '" + colour + "' AND Sleeves = '" + sleeves + "';");
+        if (results.next()) {
+            String pId = results.getString(1);
+            results = myStmt.executeQuery("SELECT Quantity FROM inventory WHERE Product = " + pId + ";");
+            results.next();
+            if (num < Integer.parseInt(results.getString(1))) {
                 try (Statement stmt = db.getConnection().createStatement();) {
-                    String stockUpdate = "UPDATE inventory SET Quantity = Quantity - " + num + " WHERE ProductId = " + Pid + ";";
+                    String stockUpdate = "UPDATE inventory SET Quantity = Quantity - " + Integer.toString(num) + " WHERE Product = " + pId + ";";
                     stmt.executeUpdate(stockUpdate);
                     db.closeConn();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                receipt = "Clothing Tyoe: Shirt\nType: " + sleaves + "\nSize: " + size + "\nMaterial: " + material + "\nBrand: " + brand + "\n\nQuantity: " + Integer.toString(num);
+                receipt = "Clothing Type: Shirt\nType: " + sleeves + "\nSize: " + size + "\nMaterial: " + material + "\nBrand: " + brand + "\n\nQuantity: " + Integer.toString(num);
             } 
-            else if (num == results.getInt("Quantity")) {
+            else if (num == Integer.parseInt(results.getString(1))) {
                 try (Statement stmt = db.getConnection().createStatement();) {
-                    String stockDelete = "DELETE FROM inventory WHERE ProductID = " + Pid + ";";
+                    String stockDelete = "DELETE FROM inventory WHERE Product = " + pId + ";";
                     stmt.executeUpdate(stockDelete);
-                    stockDelete = "DELETE FROM shirts WHERE ProductID = " + Pid + ";";
+                    stockDelete = "DELETE FROM shirts WHERE ProductID = " + pId + ";";
+                    stmt.executeUpdate(stockDelete);
                     db.closeConn();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                receipt = "Clothing Type: Shirt\nType: " + sleaves + "\nSize: " + size + "\nMaterial: " + material + "\nBrand: " + brand + "\n\nQuantity: " + Integer.toString(num);
+                receipt = "Clothing Type: Shirt\nType: " + sleeves + "\nSize: " + size + "\nMaterial: " + material + "\nBrand: " + brand + "\nColour: " + colour + "\n\nQuantity: " + Integer.toString(num);
             } 
-            else if (num > results.getInt("Quantity")) {
+            else if (num > Integer.parseInt(results.getString(1))) {
                 try (Statement stmt = db.getConnection().createStatement();) {
-                    String stockDelete = "DELETE FROM inventory WHERE ProductID = " + Pid + ";";
+                    String stockDelete = "DELETE FROM inventory WHERE ProductID = " + pId + ";";
                     stmt.executeUpdate(stockDelete);
-                    stockDelete = "DELETE FROM shirts WHERE ProductID = " + Pid + ";";
+                    stockDelete = "DELETE FROM shirts WHERE ProductID = " + pId + ";";
+                    stmt.executeUpdate(stockDelete);
                     db.closeConn();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                receipt = "Clothing Tyoe: Shirt\nType: " + sleaves + "\nSize: " + size + "\nMaterial: " + material + "\nBrand: " + brand + "\n\nQuantity: " + Integer.toString(num);
-            }
+                receipt = "Clothing Tyoe: Shirt\nType: " + sleeves + "\nSize: " + size + "\nMaterial: " + material + "\nBrand: " + brand + "\nColour: " + colour + "\n\nQuantity: " + Integer.toString(num);
+            } 
             int est = findLeadTime(this.size, this.material, this.brand);
-            receipt += "\n\nEstimated Shipping time is " + Integer.toString(est) + "hrs.\n\n";
+            receipt += "\n\nEstimated Shipping time is " + Integer.toString(est) + "hrs.\n\n"; 
         } else {
             int est = findLeadTime(this.size, this.material, this.brand);
-            receipt = "No Inventory.\nEstimated Shipping time is " + Integer.toString(est) + "hrs.\n\nThank you for your patience.";
-        }
+            receipt = "No Inventory.\nEstimated Processing time is " + Integer.toString(est) + "hrs.\n\nThank you for your patience.";
+        } 
     }
     /**
      * Updates and adds a new shirt to the stock and inventory related to the shirts database.
@@ -185,17 +189,17 @@ public class Shirts {
      */
     public void stockAddShirt (String addSize, String addMaterial, String addBrand, String addColour, String addSleaves, int quantity) throws SQLException {
         db.initializeConnection();
-        int Pid = 0;
+        int pId = 1;
         Statement myStmt = db.getConnection().createStatement();
         ResultSet results = myStmt.executeQuery("SELECT * FROM shirts WHERE Size ='" 
-            + addSize + "' AND Material ='" + addMaterial + "' AND Brand ='" + addBrand + "' AND Colour ='" + addColour + "' AND Sleaves ='" + addSleaves + "'" + ";");
+            + addSize + "' AND Material ='" + addMaterial + "' AND Brand ='" + addBrand + "' AND Colour ='" + addColour + "' AND Sleeves ='" + addSleaves + "'" + ";");
         
-        if (results != null) {
+        if (results.next()) {
             // Take the current PID and search the ->inventory<- and add the ammount.
-            Pid = results.getInt("ProductID");
+            pId = Integer.parseInt(results.getString(1));
 
             try (Statement stmt = db.getConnection().createStatement();) {
-                String stockUpdate = "UPDATE inventory SET Quantity = Quantity + " + quantity + " WHERE ProductId = " + Pid + ";";
+                String stockUpdate = "UPDATE inventory SET Quantity = Quantity + " + Integer.toString(quantity) + " WHERE Product = " + Integer.toString(pId) + ";";
                 stmt.executeUpdate(stockUpdate);
                 db.closeConn();
             } catch (SQLException e) {
@@ -205,17 +209,20 @@ public class Shirts {
         else {
             try (Statement stmt = db.getConnection().createStatement();){
                 int pLeadTime = findLeadTime(addSize, addMaterial, addBrand);
-                String allPIDs = "SELECT * shirts WHERE ProductID >= 100 and ProductID < 200;";
+                String allPIDs = "SELECT * shirts WHERE ProductID >= 1 and ProductID < 100;";
 
                 results = stmt.executeQuery(allPIDs);
+                int vacant_check = 1;
                 while (results.next()) {
-                    Pid = results.getInt("ProductID");
+                    pId = Integer.parseInt(results.getString("ProductID"));
+                    if (pId != vacant_check) break;
+                    vacant_check++;
                 }
-                Pid++;
+                pId++;
 
-                String insertSql = "INSERT INTO shirts (ProductID, Size, Material, Brand, Colour, Sleaves) VALUES (" 
-                    + Pid + ", '" + addSize + "', '" + addMaterial + "', '" + addBrand + "', '" + addColour + "', '"+ addSleaves + ");";
-                String stockSql = "INSERT INTO inventory (ProductID, Quantity, LeadTime) VALUES (" + Pid + ", " + quantity + ", " + pLeadTime + ");";
+                String insertSql = "INSERT INTO shirts (ProductID, Size, Material, Brand, Colour, Sleeves) VALUES (" 
+                    + Integer.toString(pId) + ", '" + addSize + "', '" + addMaterial + "', '" + addBrand + "', '" + addColour + "', '"+ addSleaves + ");";
+                String stockSql = "INSERT INTO inventory (Product, Quantity, LeadTime) VALUES (" + Integer.toString(pId) + ", " + Integer.toString(quantity) + ", " + Integer.toString(pLeadTime) + ");";
 
                 stmt.executeUpdate(insertSql);
                 stmt.executeUpdate(stockSql);

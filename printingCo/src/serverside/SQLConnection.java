@@ -1,6 +1,8 @@
 package printingCo.src.serverside;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class SQLConnection {
     private final String DBURL;
@@ -10,7 +12,13 @@ public class SQLConnection {
 
     // Constructors
     public SQLConnection() {
-        DBURL = "jbdc:mysql://localhost/PrintingDatabase";
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        DBURL = "jdbc:mysql://localhost/StillWatersDB";
         USERNAME = "KundaiTD";
         PASSWORD = "waters316";
     }

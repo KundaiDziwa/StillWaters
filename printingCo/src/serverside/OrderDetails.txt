@@ -4,11 +4,11 @@ Order Type: Logo / Design
 
 Clothing: Shirt
 Type: Short
-Size: M-Small
-Material: Cotton
+Size: U-XLarge
+Material: C-100
 Brand: BellaCanvas
-Colour: White 
+Colour: White
 
-Quanity: 2
+Quantity: 1
 
-Logo: Red Vinyl
+Logo: Black Vinyl

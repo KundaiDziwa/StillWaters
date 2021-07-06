@@ -5,8 +5,11 @@ import java.util.Vector;
 
 public class MainData {
     public static void main(String[] args) throws Exception {
-        HandleOrder process = new HandleOrder("OrderDetails", "OrderReview");
+        HandleOrder process = new HandleOrder("printingCo/src/serverside/OrderDetails", "printingCo/src/serverside/OrderReview");
         // Transfer the data into the Backend process.
+        // --------------------------------------------------
+        // Reading the data from the input file.
+        process.readData();
         Vector<String> details = process.getOrder();
         Shirts shirtOrder = new Shirts(details.elementAt(1), details.elementAt(2), details.elementAt(3), details.elementAt(4), details.elementAt(0), Integer.parseInt(details.elementAt(5)));
         String receipt = shirtOrder.getReceipt();
@@ -38,9 +41,10 @@ class HandleOrder {
         try {
             br = new BufferedReader(new FileReader(input_file));
             String line = br.readLine();
-            String[] request = line.split(": ");
+            String[] request;
             // Read the input data and retrieve all of the 
             while (line != null) {
+                request = line.split(": ");
                 if (request.length != 0) {
                     if (request[0].equals("Order Type")) {
                         orderType = request[1];
@@ -85,7 +89,7 @@ class HandleOrder {
     }
     public void writeData(String data) throws IOException, FileNotFoundException {
         String basicInfo = "Review order\n\nOrder Type: " + orderType + "\n\n";
-        String description = "Description Information:\nN/A.\nLogo: " + vinyls + "\n\n";
+        String description = "\n\nDescription Information:\nN/A.\nLogo: " + vinyls + "\n\n";
         String status = "Order Placed.";
         
         BufferedWriter bw = null;
