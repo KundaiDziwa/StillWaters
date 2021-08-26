@@ -4,8 +4,8 @@ Order Type: Logo / Design
 
 Clothing Type: Shirt
 Type: Short
-Size: U-XLarge
-Material: C-100
+Size: U-Large
+Material: C-52, P-48
 Brand: BellaCanvas
 
 Quantity: 1
@@ -16,6 +16,6 @@ Estimated Shipping time is 48hrs.
 
 Description Information:
 N/A.
-Logo: Black Vinyl
+Logo: Logo
 
 Order Placed.

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1.0">
+    <title>EKC Printing</title>
+    <link rel="stylesheet" href="process2.css">
+
+    <script src="order_cart.js"></script>
+    <script src="design.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Montserrat:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="home.html"><img src="/Images/icons/home.png"></a>
+                <ul>
+                    <li><a href="#">Order Type</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">File Drop</a></li>
+                    <li><a href="#">Payment</a></li>
+                    <li><a href="#">Confirmation</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="top-wallpaper">
+        <h1><b>Products</b></h1>
+    </div>
+    <div class="filters">
+        <h2>Filters:</h2>
+        <div class="filter-options option1">
+            <h3>Clothing</h3>
+            <select>
+                <option value="">N/A</option>
+                <option value="">Shirts</option>
+                <option value="">Sweatpants</option>
+                <option value="">Sweaters</option>
+                <option value="">Jackets</option>
+                <option value="">Shorts</option>
+                <option value="">Hats</option>
+            </select>
+        </div>
+        <div class="filter-options option2">
+            <h3>Material</h3>
+            <select>
+                <option value="">N/A</option>
+                <option value="">Cotton</option>
+                <option value="">Polysester</option>
+                <option value="">Blend</option>
+            </select>
+        </div>
+        <div class="filter-options option3">
+            <h3>Brand</h3>
+            <select>
+                <option value="">N/A</option>
+                <option value="">BellaCanvas</option>
+                <option value="">Gildan</option>
+                <option value="">Circut</option>
+            </select>
+        </div>
+    </div>
+    <div class="products"></div>
+    <div class="progress-circle">
+        <div class="inner" onmouseover="showProgress('40%');" onmouseleave="progressReset();"></div>
+        <div class="info" id="info" onmouseover="showProgress('40%');" onmouseleave="progressReset();">Progress</div>
+        <div class="circle">
+            <div class="bar left">
+                <div class="progress"></div>
+            </div>
+            <div class="bar right">
+                <div class="progress"></div>
+            </div>
+        </div>
+    </div>
+    <button class="cart" id="cartID" onclick="showCart();">
+        <img src="/Images/icons/home.png">
+        <div class="cart-size">
+            <h1 id="cartSize">0</h1>
+        </div>
+    </button>
+    <a href="#" class="continue-btn">Continue</a>
+</body>
+</html>
+<!--onmouseover="createCards();"-->

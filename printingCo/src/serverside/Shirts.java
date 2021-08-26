@@ -144,7 +144,7 @@ public class Shirts {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                receipt = "Clothing Type: Shirt\nType: " + sleeves + "\nSize: " + size + "\nMaterial: " + material + "\nBrand: " + brand + "\n\nQuantity: " + Integer.toString(num);
+                receipt = "Clothing Type: Shirt\nType: " + sleeves + "\nSize: " + size + "\nMaterial: " + material + "\nBrand: " + brand + "\nColour: " + colour + "\n\nQuantity: " + Integer.toString(num);
             } 
             else if (num == Integer.parseInt(results.getString(1))) {
                 try (Statement stmt = db.getConnection().createStatement();) {

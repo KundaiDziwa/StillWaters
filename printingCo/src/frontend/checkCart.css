@@ -1,0 +1,180 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Arvo', serif;
+    box-sizing: border-box;
+}
+body{
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    text-align: center;
+    background-color: rgb(233, 253, 253);
+    overflow-x: hidden;
+}
+
+/* ------ Progress nav bar ------ */
+a{
+    text-decoration: none;
+    color: rgb(131, 132, 138);
+}
+a img{
+    height: 30px;
+    width: 30px;
+    transform: translateX(-100rem);
+    animation: slideIn .5s forwards;
+}
+.container{
+    max-width: 120rem;
+    width: 90%;
+    margin: 0 auto;
+}
+nav{
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: uppercase;
+    font-size: 0.8rem;
+}
+nav ul{
+    display: flex;
+}
+nav ul li{
+    list-style: none;
+    transform: translateX(100rem);
+    animation: slideIn .5s forwards;
+}
+nav li:nth-child(1){
+    animation-delay: 0s;
+}
+nav li:nth-child(2){
+    animation-delay: .5s;
+}
+nav li:nth-child(3){
+    animation-delay: 1s;
+}
+nav li:nth-child(4){
+    animation-delay: 1.5s;
+}
+nav li:nth-child(5){
+    animation-delay: 2s;
+}
+nav ul li a{
+    padding: 1rem 0;
+    margin: 0 3rem;
+    position: relative;
+    letter-spacing: 2px;
+}
+nav ul li a:last-child{
+    margin-right: 0;
+}
+nav ul li a::before,
+nav ul li a::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: crimson;
+    left: 0;
+    transform: scaleX(0);
+    transition: all .5s;
+}
+nav ul li a::before{
+    top: 0;
+    transform-origin: left;
+}
+nav ul li a::after{
+    bottom: 0;
+    transform-origin: right;
+}
+nav ul li a:hover::before,
+nav ul li a:hover::after{
+    transform: scaleX(1);
+}
+@keyframes slideIn {
+    from{}
+    to{
+        transform: translateX(0);
+    }
+}
+
+/* ----- Cart Review Pop up ----- */
+.cart-review{
+    width: 80%;
+    height: 80%;
+    z-index: 25;
+    background: #fff;
+    top: 10%;
+    left: 10%;
+    position: absolute;
+    border-radius: 15px;
+    flex-direction: row;
+    overflow-y: scroll;
+}
+.order{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5%;
+}
+.order-content{
+    margin-left: 5%;
+    margin-right: 2.5%;
+    width: 70%;
+}
+.order img{
+    width: 10%;
+    height: 10%;
+    border-radius: 10%;
+}
+.close-button{
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    width: 5%;
+    height: 5%;
+}
+.close-button img{
+    width: 100%;
+    height: 100%;
+}
+.title{
+    position: relative;
+    top: 4%;
+    font-size: 40px;
+    color: #efefef;
+    font-weight: 800;
+    text-transform: uppercase;
+    animation: text-pop-up 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) infinite alternate both;
+}
+@-webkit-keyframes text-pop-up{
+    0%
+    {
+        transform: translateY(0);
+        transform-origin: 50% 50%;
+        text-shadow: none;
+    }
+    100%
+    {
+        transform: translateY(-30px);
+        transform-origin: 50% 50%;
+        text-shadow: 0 1px 0 #ccc,
+        0 2px 0 #ccc,
+        0 3px 0 #ccc,
+        0 4px 0 #ccc,
+        0 5px 0 #ccc,
+        0 6px 0 #ccc,
+        0 7px 0 #ccc,
+        0 8px 0 #ccc,
+        0 9px 0 #ccc,
+        0 50px 30px rgba(0, 0, 0, 0.3)
+        ;
+    }
+}
+
+/* ----- buttons ------ */
+.deleteBtn{
+    margin: 2.5%;
+}

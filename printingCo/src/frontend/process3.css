@@ -31,6 +31,7 @@ body{
     left: 10%;
     position: absolute;
     transform: scale(2);
+    z-index: 20;
 }
 .progress-circle .inner{
     position: absolute;
@@ -66,12 +67,21 @@ body{
 }
 @keyframes left {
     100%{
-        transform: rotate(72deg);
+        transform: rotate(180deg);
     }
 }
 .circle .right{
     z-index: 3;
     transform: rotate(180deg);
+}
+.circle .right .progress{
+    animation: right 1s linear both;
+    animation-delay: 2s;
+}
+@keyframes right {
+    100%{
+        transform: rotate(36deg);
+    }
 }
 
 /* ------ Progress nav bar ------ */
@@ -91,7 +101,7 @@ a img{
     margin: 0 auto;
 }
 nav{
-    padding-top: 2rem;
+    padding-top: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -172,6 +182,7 @@ nav ul li a:hover::after{
     border-radius: 30px;
     box-shadow: 0 0 0 0 rgba(143, 64, 248, 0.5), 0 0 0 0 rgba(39, 200, 255, 0.5);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 10;
 }
 .continue-btn::after{
     content: "";
@@ -193,49 +204,63 @@ nav ul li a:hover::after{
     transform: rotate(150deg);
 }
 
-/* ----- Order type card ----- */
-.card-base{
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    width: 350px;
-    height: 500px;
-    background-color: #ffe697;
-    border-radius: 40px;
-    box-shadow: 2px 2px 22px rgba(0, 0, 0, 0.2);
-    transition: .3s box-shadow, .3s margin-top ease-in-out;
-}
-.back-img{
-    background: url('/Images/Background/cartoon-foldedshirt.jpg') no-repeat;
-    width: 350px;
-    height: 350px;
-    border-radius: 40px;
+/* ----- Top Wallpaper ----- */
+.top-wallpaper{
+    height: 15%;
+    width: 100%;
+    top: 7%;
+    position: absolute;
+    background-image: url('/Images/Background/pencil_crayons.jpg');
+    background-repeat: no-repeat;
     background-size: 100%;
-    background-position-y: 90%;
-}
-.type-select{
-    top: 2.5%;
-    position: relative;
-}
-.title h1{
-    width: 260px;
-    height: 50px;
-    border-radius: 50px;
-    margin: 0 auto;
-    margin-top: -25px;
-    font-size: 35px;
-    justify-content: center;
     text-align: center;
-    color: white;
-    background-color: #ff8a8a;
 }
-.title p{
-    padding-top: 15px;
-    padding-left: 10px;
-    padding-right: 10px;
+.top-wallpaper h1{
+    margin: auto;
+    width: 50%;
+    padding: 2rem;
+    letter-spacing: 2rem;
+    font-size: 3rem;
 }
-.card-base:hover{
-    box-shadow: 2px 12px 32px rgba(0, 0, 0, 0.5);
-    margin-top: -20px;
-    cursor: pointer;
+
+/* ----- Drop File section ----- */
+.fileDrop-container{
+    width: 80%;
+    height: 50%;
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    border: 2px dashed rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    transition: 1s ease-in-out;
+}
+.fileDrop-container:hover{
+    border: 2px solid rgba(0, 0, 0, 0.2);
+}
+.file-drop{
+    width: 40%;
+    padding: 5%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+}
+.file-drop:hover{
+    background:rgb(187, 218, 223);
+    box-shadow: -5px 10px #888888;
+}
+.file-description{
+    width: 60%;
+    padding: 5%;
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+}
+textarea{
+    margin: 5px;
+    border: none;
+    outline: none;
+    resize: none;
 }

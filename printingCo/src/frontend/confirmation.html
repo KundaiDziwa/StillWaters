@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1.0">
+    <title>EKC Printing</title>
+    <link rel="stylesheet" href="process5.css">
+    <script src="paymentInfo.js"></script>
+    <script src="order_cart.js"></script>
+    <script src="design.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Montserrat:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="home.html"><img src="/Images/icons/home.png"></a>
+                <ul>
+                    <li><a href="#">Order Type</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">File Drop</a></li>
+                    <li><a href="#">Payment</a></li>
+                    <li><a href="#">Confirmation</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="top-wallpaper">
+        <h1><b>Confirmation</b></h1>
+    </div>
+    <div class="content-container">
+        <div class="sub-containers order-container">
+            <h2>Order Confirmation</h2>
+            <br>
+            <div class="cOrders" id="confirm-orders">
+            </div>
+        </div>
+        <div class="sub-containers pay_ship-container">
+            <h2>Payment and Shipping</h2>
+            <br>
+            <p id="name">Name: N/A</p>
+            <p id="address">Address: N/A</p>
+            <p id="pNumber">Phone Number: (XXX)XXX-XXXX</p>
+            <p id="email">Email: example@gmail.com</p>
+            <div class="card">
+                <div class="face front">
+                    <h3 class="debit">Debit Card</h3>
+                    <h3 class="bank">Bank Name</h3>
+                    <img src="/Images/icons/chip.png" class="chip">
+                    <h3 class="number" id="cNumber">XXXX XXXX XXXX XXXX</h3>
+                    <h5 class="valid"><span>Valid<br>thru</span><span id="exDate">MM/YY<br>XX/XX</span></h5>
+                    <h5 class="cardHolder" id="cHName">CardHolder Name</h5>
+                </div>
+                <div class="face back">
+                    <div class="blackbar"></div>
+                    <div class="ccvtext">
+                        <h5>Autorized Signature-not valid unless signed</h5>
+                        <div class="whiteBar"></div>
+                        <div class="ccv" id="ccv">XXX</div>
+                    </div>
+                    <p class="text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora, neque molestiae dolores ipsum ipsa voluptatum ut autem nam! Id laborum, ratione rem voluptatum eveniet, vel quae aperiam, repudiandae magni odit amet modi. Placeat esse eum maiores quod impedit aspernatur pariatur at nihil. Magnam porro culpa exercitationem nemo totam corrupti quos officia voluptates quam iure fugiat vero labore earum incidunt molestias, animi saepe cupiditate. Modi, iusto ipsa molestiae tempora excepturi ipsum dignissimos placeat voluptatem vel omnis? Quia, velit. Commodi fugit sunt distinctio quisquam ipsam eum vero!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="submit-request" id="request">Go Back</button>
+    <div class="confirm-email">
+        <button class="order-request" id="orderR">Change Order</button>
+        <button class="pay_ship-request" id="pay_shipR">Change Payment/Shipping</button>
+        <br><br>
+        <input id="email-submit" type="submit" value="Confirm">
+        <br><br>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi, reiciendis nihil amet cumque voluptas harum?</p>
+    </div>
+    <div class="progress-circle">
+        <div class="inner" onmouseover="showProgress('100%');" onmouseleave="progressReset();"></div>
+        <div class="info" id="info" onmouseover="showProgress('100%');" onmouseleave="progressReset();">Completed</div>
+        <div class="circle">
+            <div class="bar left">
+                <div class="progress"></div>
+            </div>
+            <div class="bar right">
+                <div class="progress"></div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="continue-btn">Finish</a>
+</body>
+</html>

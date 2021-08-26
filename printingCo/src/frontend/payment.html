@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1.0">
+    <title>EKC Printing</title>
+    <link rel="stylesheet" href="process4.css">
+    <script src="paymentInfo.js"></script>
+    <script src="order_cart.js"></script>
+    <script src="design.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Montserrat:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="home.html"><img src="/Images/icons/home.png"></a>
+                <ul>
+                    <li><a href="#">Order Type</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">File Drop</a></li>
+                    <li><a href="#">Payment</a></li>
+                    <li><a href="#">Confirmation</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="top-wallpaper">
+        <h1><b>Payment</b></h1>
+    </div>
+    <div class="info-card shipping-info" id="shippingID">
+        <h2>Shipping Info</h2>
+        <div class="text-field shiping-text">
+            <br>
+            <label class="shipping-label" for="sFirstName"></label>
+            <input type="text" id="sFirstNamet" placeholder="First Name" required>
+            <br>
+            <label class="shipping-label" for="sLastName"></label>
+            <input type="text" id="sLastName" placeholder="Last Name" required>
+            <br>
+            <label class="shipping-label" for="sAddress"></label>
+            <input type="text" id="sAddress" placeholder="Address" required>
+            <br>
+            <label class="shipping-label" for="sCity"></label>
+            <input type="text" id="sCity" placeholder="City" required>
+            <br>
+            <label class="shipping-label" for="sProvince"></label>
+            <input type="text" id="sProvince" placeholder="Province" required>
+            <br>
+            <label class="shipping-label" for="sCountry"></label>
+            <input type="text" id="sCountry" placeholder="Country" required>
+            <br>
+            <label class="shipping-label" for="sPostalCode"></label>
+            <input type="text" id="sPostalCode" placeholder="Postal Code" required>
+            <br>
+            <label class="shipping-label" for="sEmail"></label>
+            <input type="text" id="sEmail" placeholder="Email" required>
+            <br>
+            <label class="shipping-label" for="sPNumber"></label>
+            <input type="text" id="sPNumber" placeholder="Phone Number" required>
+            <br>
+            <br>
+            <input class="ship-submit" id="ship-submit" type="submit" value="Submit" onclick="storeShip(); payProgress('33'); showBtn('bill-submit'); showBtn('bill-copy'); showBtn('saveShipping');">
+            <br>
+            <button class="saveInfo saveShip" id="saveShipping" onclick="saveShipData(); showBtn('removeShipping');">Save</button>
+            <button class="saveInfo removeShip" id="removeShipping" onclick="removeShip();">Remove</button>
+        </div>
+    </div>
+    <div class="info-card billing-info" id="billingID">
+        <h2>Billing Info</h2>
+        <div class=" text-field billing-text">
+            <br>
+            <label class="billing-label" for="bFirstName"></label>
+            <input type="text" id="bFirstNamet" placeholder="First Name">
+            <br>
+            <label class="billing-label" for="bLastName"></label>
+            <input type="text" id="bLastName" placeholder="Last Name">
+            <br>
+            <label class="billing-label" for="bAddress"></label>
+            <input type="text" id="bAddress" placeholder="Address">
+            <br>
+            <label class="billing-label" for="bCity"></label>
+            <input type="text" id="bCity" placeholder="City">
+            <br>
+            <label class="billing-label" for="bProvince"></label>
+            <input type="text" id="bProvince" placeholder="Province">
+            <br>
+            <label class="billing-label" for="bCountry"></label>
+            <input type="text" id="bCountry" placeholder="Country">
+            <br>
+            <label class="billing-label" for="bPostalCode"></label>
+            <input type="text" id="bPostalCode" placeholder="Postal Code">
+            <br>
+            <label class="billing-label" for="bemail"></label>
+            <input type="text" id="bemail" placeholder="Email">
+            <br>
+            <label class="billing-label" for="bPNumber"></label>
+            <input type="text" id="bPNumber" placeholder="Phone Number">
+            <br>
+            <br>
+            <input class="bill-copy" id="bill-copy" type="submit" value="Copy Shipping" onclick="copyShip(); payProgress('66'); showBtn('pay-submit'); showBtn('saveBilling');">
+            <input class="bill-submit" id="bill-submit" type="submit" value="Submit" onclick="storeBill(); payProgress('66'); showBtn('pay-submit'); showBtn('saveBilling');">
+            <br>
+            <button class="saveInfo saveBill" id="saveBilling" onclick="saveBillData(); showBtn('removeShipping');">Save</button>
+            <button class="saveInfo removeBill" id="removeBilling" onclick="removeBill();">Remove</button>
+        </div>
+    </div>
+    <div class="info-card payment-info" id="paymentID">
+        <h2>Payment</h2>
+        <div class="text-field payment-text">
+            <br>
+            <label class="payment-label" for="CardName">Name on Card</label>
+            <input type="text" id="CardName" placeholder="First and Last Name" required>
+            <br>
+            <label class="payment-label" for="CNumber">Card Number</label>
+            <input type="text" id="CNumber" placeholder="XXXXXXXXXXXXXXXX" required>
+            <br>
+            <label class="payment-label" for="ExpiryMonth">Expiry Date</label>
+            <input type="text" id="ExpiryMonth" placeholder="MM" required>
+            <label class="payment-label" for="ExpiryYear"></label>
+            <input type="text" id="ExpiryYear" placeholder="YY" required>
+            <br>
+            <label class="payment-label" for="code">CVV/CVC</label>
+            <input type="text" id="code" placeholder="XXX" required>
+            <br><br>
+            <div class="total-price">
+                <h3 id="total">Subtotal: $CAD</h3>
+            </div>
+            <br>
+            <input class="pay-submit" id="pay-submit" type="submit" value="Submit" onclick="payProgress('100'); storePayData();">
+        </div>
+    </div>
+    <div class="progress-circle">
+        <div class="inner" onmouseover="showProgress('80%');" onmouseleave="progressReset();"></div>
+        <div class="info" id="info" onmouseover="showProgress('80%');" onmouseleave="progressReset();">Progress</div>
+        <div class="circle">
+            <div class="bar left">
+                <div class="progress"></div>
+            </div>
+            <div class="bar right">
+                <div class="progress"></div>
+            </div>
+        </div>
+    </div>
+    <div class="payment-progress">
+        <div class="payment-progress-done" id="progress" data-done="0">0%</div>
+    </div>
+    <a href="#" class="continue-btn">Continue</a>
+</body>
+</html>

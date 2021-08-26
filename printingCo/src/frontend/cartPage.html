@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1.0">
+    <title>EKC Printing</title>
+    <link rel="stylesheet" href="checkCart.css">
+    <script src="order_cart.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Montserrat:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="home.html"><img src="/Images/icons/home.png"></a>
+                <ul>
+                    <li><a href="#">Order Type</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">File Drop</a></li>
+                    <li><a href="#">Payment</a></li>
+                    <li><a href="#">Confirmation</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="cart-review" id="cart-reviewID">
+        <button class="close-button" id="close-cart" onclick="removeCart();"><img src="/Images/icons/home.png"></button>
+        <div class="title">Your Cart</div>
+        <br>
+        <hr>
+        <div class="order-container"></div>
+        <hr>
+    </div>
+</body>
+</html>

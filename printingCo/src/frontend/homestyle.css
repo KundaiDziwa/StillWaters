@@ -262,7 +262,6 @@ nav{
     top: 210%;
     font-size: 35px;
     font-family: 'Montserrat', sans-serif;
-    text-decoration: underline;
 }
 .about-col{
     flex-basis: 44%;
@@ -328,25 +327,98 @@ nav{
     background-image: url(/Images/Background/blue_crewneck.jpg);
     background-size: cover;
 }
-.arrowR-btn{
-    top: 345%;
-    right: 22.5%;
+.mail-btn{
+    top: 350%;
+    left: 42.5%;
     position: absolute;
 }
-.arrowL-btn{
-    top: 345%;
-    left: 22.5%;
+.phone-btn{
+    top: 350%;
+    right: 42.5%;
     position: absolute;
 }
-.contact-btns img{
-    width: 10%;
-    height: 10%;
-}
-.contact-btns:hover img{
-    width: 12%;
-    height: 12%;
+.mail-btn img
+{
+    width: 3em;
+    height: 3em;
     transition: 1s;
-    border-style: solid;
-    border-color: #f44336;
-    border-radius: 50%;
+}
+.phone-btn img
+{
+    width: 3em;
+    height: 3em;
+    transition: 1s;
+}
+.mail-btn:hover img{
+    width: 4em;
+    height: 4em;
+}
+.phone-btn:hover img{
+    width: 4em;
+    height: 4em;
+}
+
+/* ----- Footer Section ----- */
+footer{
+    background: #111;
+    height: auto;
+    width: 100vw;
+    padding-top: 40px;
+    color: #fff;
+}
+.footer-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+.footer-content h3{
+    font-size: 1.8rem;
+    font-weight: 400;
+    text-transform: capitalize;
+    line-height: 3rem;
+}
+.footer-content p{
+    max-width: 500px;
+    margin: 10px auto;
+    line-height: 28px;
+    font-size: 14px;
+}
+.socials{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0 3rem 0;
+}
+.socials li{
+    margin: 0 10px;
+}
+.socials a{
+    text-decoration: none;
+    color: #fff;
+}
+.socials a i{
+    font-size: 1.1rem;
+    transition: color .4s ease;
+}
+.socials a:hover i{
+    color: aqua;
+}
+.footer-bottom{
+    background: #000;
+    width: 100vw;
+    padding: 20px 0;
+    text-align: center;
+}
+.footer-bottom p{
+    font-size: 14px;
+    word-spacing: 2px;
+    text-transform: capitalize;
+}
+.footer-bottom span{
+    text-transform: uppercase;
+    opacity: .4;
+    font-weight: 200;
 }
